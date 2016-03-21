@@ -1,0 +1,3 @@
+default:
+  title: BEAR Blog
+layout:react/default.tpl
