@@ -4,4 +4,3 @@
         <li class="nav" ><a href="#debugModal" data-toggle="modal">debug</a></li>
     </ul>
 </nav>
-<a href="#myModal" role="button" class="btn" data-toggle="modal">Modal起動</a>
