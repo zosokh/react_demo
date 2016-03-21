@@ -19,25 +19,7 @@
                 <div class="itemlist_h1">
                     <h1>ITEM LIST</h1>
                 </div>
-                {foreach from=$itemList key=k item=v}
-                  {if ($k%4 == 0 )}
-                    <div class="row" style="margin-bottom: 30px;">
-                  {/if}
-                <div class="col-md-3 col-sm-6" style="background-color: #FFF;">
-                      <div class="thumbnail ">
-                        <div class="item_imgbox">
-                            <img class="img-rounded img-responsive" src="{$v.img}" alt="">
-                        </div>
-                        <div class="caption">
-                          <h4>{$v.name}</h4>
-                          <p>{$v.comment}</p>
-                        </div>
-                      </div>
-                </div>
-                {if ((($k+1)%4 == 0) || (count($ITEMS) == $k+1))}
-                  </div>
-                {/if}
-                {/foreach}
+                <div id="item_contest"></div>
 
             </div>
             <div id="footer">
