@@ -14,3 +14,4 @@ logs/*
 *.tpl.php
 composer.phar
 vendor
+node_modules/*
