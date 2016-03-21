@@ -1,10 +1,6 @@
 {* <body > *}
     <div class="container-fluid">
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="background-color:#444;">
-            <ul class="nav navbar-nav">
-                <li class="active nav"><a href="#">Home</a></li>
-            </ul>
-        </nav>
+        {include file='elements/nav.tpl'}
         <div id="wrapaper">
             <div id="header">
 
