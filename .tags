@@ -1,0 +1,4 @@
+Page_Ajax_Basic_Ajax_Resource_Delete	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^class Page_Ajax_Basic_Ajax_Resource_Delete extends App_Page$/;"	class	line:5
+onInject	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^    public function onInject()$/;"	function	line:7
+onInit	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^    public function onInit(array $args)$/;"	function	line:15
+onOutput	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^    public function onOutput()$/;"	function	line:25

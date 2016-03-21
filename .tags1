@@ -1,0 +1,10 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Page_Ajax_Basic_Ajax_Resource_Delete	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^class Page_Ajax_Basic_Ajax_Resource_Delete extends App_Page$/;"	class	line:5
+onInject	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^    public function onInject()$/;"	function	line:7
+onInit	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^    public function onInit(array $args)$/;"	function	line:15
+onOutput	/Users/KazatoHiei/Documents/vagrant/ubuntu/app/bear.sample/htdocs/ajax/resource/delete.php	/^    public function onOutput()$/;"	function	line:25
