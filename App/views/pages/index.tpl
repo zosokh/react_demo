@@ -1,4 +1,3 @@
-{* <body > *}
     <div class="container-fluid">
         {include file='elements/nav.tpl'}
         <div id="wrapaper">
@@ -48,6 +47,3 @@
 
         </div>
     </div>
-
-
-{* </body> *}

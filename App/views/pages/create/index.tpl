@@ -1,5 +1,3 @@
-<body >
-
     <div class="container-fluid">
         
         <div id="wrapaper">
@@ -58,6 +56,3 @@
             </div><!-- row -->
         </div><!-- wrapaper -->
     </div><!-- container-fluid -->
-
-
-</body>
