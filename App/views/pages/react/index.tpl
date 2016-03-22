@@ -14,14 +14,9 @@
             </div>
 
             <div class="row">
-
-                <div class="itemlist_h1">
-                    <h1>ITEM LIST</h1>
-                </div>
                 <div id="item_content"></div>
                 <script type="text/babel" src="/js/react.js"></script>
                 <script type="text/babel"></script>
-
             </div>
             <div id="footer">
                 <div class="jumbotron black_footer">

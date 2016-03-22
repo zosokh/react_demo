@@ -47,10 +47,16 @@ var CommentBox = React.createClass({
   render: function() {
     console.log(this.state.data);
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList data={this.state.data} />
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+      <div className="row">
+        <div className="row mt20 txtct">
+          <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+        </div>
+        <div className="itemlist_h1">
+            <h1>ITEM LIST</h1>
+        </div>
+        <div className="row mt20">
+          <CommentList data={this.state.data} />
+        </div>
       </div>
     );
   }
