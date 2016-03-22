@@ -1,15 +1,21 @@
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
-      url: this.props.url,
+      url: '/api/select.php',
+      // url: this.props.url,
       dataType: 'json',
+      data	:{
+  			'limit' : 20
+  		},
       cache: false,
       success: function(data) {
-        this.setState({data: data});
+        // console.log(data['json']);
+        this.setState({data: data['json'][0]});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
+        console.error(this.props, status, err.toString());
+        // console.log(xhr);
+      }.bind(this),
     });
   },
   handleCommentSubmit: function(comment) {
@@ -22,6 +28,7 @@ var CommentBox = React.createClass({
       type: 'POST',
       data: comment,
       success: function(data) {
+        console.log(data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -38,6 +45,7 @@ var CommentBox = React.createClass({
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function() {
+    console.log(this.state.data);
     return (
       <div className="commentBox">
         <h1>Comments</h1>
@@ -51,21 +59,23 @@ var CommentBox = React.createClass({
 
 var CommentList = React.createClass({
   render: function() {
-    var src = "https://www.google.com/maps/d/thumbnail?mid=zbHU0xs8A7o0.kaNFRZU4YqrI&hl=en_US";
+    console.log(this.props.data);
     var commentNodes = this.props.data.map(function (comment) {
+      console.log(comment.name);
       return (
         <div className="col-md-3 col-sm-6">
           <div className="thumbnail ">
             <div className="item_imgbox">
-              <img className="img-rounded img-responsive" src={src} />
+              <img className="img-rounded img-responsive" src={comment.img} />
             </div>
-            <Comment author={comment.author}>
-                {comment.text}
+            <Comment author={comment.name}>
+                {comment.comment}
             </Comment>
           </div>
         </div>
       );
     });
+    console.log(commentNodes);
     return (
       <div className="commentList">
         {commentNodes}
@@ -101,29 +111,15 @@ var CommentForm = React.createClass({
 var Comment = React.createClass({
   rawMarkup: function() {
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    console.log(rawMarkup);
     return { __html: rawMarkup };
   },
 
   render: function() {
     return (
-      // <div className="comment">
-      //   <h2 className="commentAuthor">
-      //     {this.props.author}
-      //   </h2>
-      //   <span dangerouslySetInnerHTML={this.rawMarkup()} />
-      // </div>
-      // <div className="col-md-3 col-sm-6" style="background-color: #FFF;">
-            // <div className="thumbnail ">
-              // <div className="item_imgbox">
-              //     <img className="img-rounded img-responsive" src="https://www.google.com/maps/d/thumbnail?mid=zbHU0xs8A7o0.kaNFRZU4YqrI&hl=en_US" alt="">
-              // </div>
-              <div className="caption">
-                <h4>{this.props.author}</h4>
-                <span dangerouslySetInnerHTML={this.rawMarkup()} />
-              </div>
-            // </div>
-      // </div>
+      <div className="caption">
+        <h4>{this.props.author}</h4>
+        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+      </div>
     );
   }
 });

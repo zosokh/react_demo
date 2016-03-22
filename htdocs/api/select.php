@@ -25,7 +25,7 @@ class Page_Ajax_Basic_Api_Select extends App_Page
 
     public function onOutput()
     {
-        $this->_ajax->addAjax('json',array('itemList' => $this->itemList,'resurt' => 'true'));
+        $this->_ajax->addAjax('json',$this->itemList);
         $this->output('ajax');
     }
 }
