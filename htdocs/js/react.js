@@ -60,9 +60,18 @@ var CommentBox = React.createClass({
 var CommentList = React.createClass({
   render: function() {
     console.log(this.props.data);
+    var countItem = this.props.data.length;
     var commentNodes = this.props.data.map(function (comment) {
       console.log(comment.name);
+      var fourBlockTop = '';
+      var fourBlockEnd = '';
+      if (comment.id % 4 == 0) {
+        fourBlockTop = 'row';
+      } else if (((comment.id + 1) %4 == 0) || (countItem == comment.id + 1)) {
+        fourBlockEnd = '';
+      }
       return (
+      <div className={fourBlockTop}>
         <div className="col-md-3 col-sm-6">
           <div className="thumbnail ">
             <div className="item_imgbox">
@@ -73,6 +82,7 @@ var CommentList = React.createClass({
             </Comment>
           </div>
         </div>
+      </div>
       );
     });
     console.log(commentNodes);
