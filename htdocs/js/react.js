@@ -2,14 +2,12 @@ var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: '/api/select.php',
-      // url: this.props.url,
       dataType: 'json',
       data	:{
   			'limit' : 20
   		},
       cache: false,
       success: function(data) {
-        // console.log(data['json']);
         this.setState({data: data['json'][0]});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -20,18 +18,22 @@ var CommentBox = React.createClass({
   },
   handleCommentSubmit: function(comment) {
     var comments = this.state.data;
+    // console.log(comments);
     var newComments = comments.concat([comment]);
+    console.log(comment);
     this.setState({data: newComments});
     $.ajax({
-      url: this.props.url,
+      url: '/api/create.php',
       dataType: 'json',
       type: 'POST',
       data: comment,
       success: function(data) {
         console.log(data);
-        this.setState({data: data});
+        this.setState({data: data['json'][0]});
       }.bind(this),
       error: function(xhr, status, err) {
+        console.log('error');
+        console.log(xhr);
         this.setState({data: comments});
         console.error(this.props.url, status, err.toString());
       }.bind(this)
@@ -45,7 +47,7 @@ var CommentBox = React.createClass({
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
   },
   render: function() {
-    console.log(this.state.data);
+    // console.log(this.state.data);
     return (
       <div className="row">
         <div className="row mt20 txtct">
@@ -65,10 +67,8 @@ var CommentBox = React.createClass({
 
 var CommentList = React.createClass({
   render: function() {
-    console.log(this.props.data);
     var countItem = this.props.data.length;
     var commentNodes = this.props.data.map(function (comment) {
-      console.log(comment.name);
       var fourBlockTop = '';
       var fourBlockEnd = '';
       if (comment.id % 4 == 0) {
@@ -91,7 +91,6 @@ var CommentList = React.createClass({
       </div>
       );
     });
-    console.log(commentNodes);
     return (
       <div className="commentList">
         {commentNodes}
@@ -103,22 +102,40 @@ var CommentList = React.createClass({
 var CommentForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = ReactDOM.findDOMNode(this.refs.author).value.trim();
-    var text = ReactDOM.findDOMNode(this.refs.text).value.trim();
-    if (!text || !author) {
+    // console.log();
+    var name = ReactDOM.findDOMNode(this.refs.name).value.trim();
+    var comment = ReactDOM.findDOMNode(this.refs.comment).value.trim();
+    var img = ReactDOM.findDOMNode(this.refs.img).value.trim();
+    var price = ReactDOM.findDOMNode(this.refs.price).value.trim();
+    // console.log(name);
+    if (!comment || !name || !price) {
       return;
     }
-    this.props.onCommentSubmit({author: author, text: text});
-    ReactDOM.findDOMNode(this.refs.author).value = '';
-    ReactDOM.findDOMNode(this.refs.text).value = '';
+    this.props.onCommentSubmit({name: name, comment: comment, img: img, price: price});
+    ReactDOM.findDOMNode(this.refs.name).value = '';
+    ReactDOM.findDOMNode(this.refs.comment).value = '';
+    ReactDOM.findDOMNode(this.refs.img).value = '';
+    ReactDOM.findDOMNode(this.refs.price).value = '';
     return;
   },
   render: function() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Your name" ref="author" />
-        <input type="text" placeholder="Say something..." ref="text" />
-        <input type="submit" value="Post" />
+      <form name="form" className="form" onSubmit={this.handleSubmit}>
+          <div className="mt20">
+              <input size="30" maxlength="30" className="form-control" placeholder="タイトル" ref="name" type="text" />
+          </div>
+          <div className="mt20">
+              <textarea cols="30" rows="10" className="form-control" placeholder="詳細" ref="comment"></textarea>
+          </div>
+          <div className="mt20">
+              <input size="30" maxlength="300" className="form-control" placeholder="画像パス" ref="img" type="text" />
+          </div>
+          <div className="mt20">
+              <input size="10" maxlength="10" className="form-control" placeholder="価格" ref="price" type="text" />
+          </div>
+          <div className="mt20">
+              <input className="btn btn-danger btn-lg" value="登録する" type="submit" />
+          </div>
       </form>
     );
   }

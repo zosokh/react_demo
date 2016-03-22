@@ -12,7 +12,7 @@ class Page_Ajax_Basic_Api_Create extends App_Page
         $this->_ajax = BEAR::dependency('BEAR_Page_Ajax');
         $this->injectArg('name',$_POST['name']);
         $this->injectArg('img',$_POST['img'], null);
-        $this->injectArg('coment',$_POST['comment']);
+        $this->injectArg('comment',$_POST['comment']);
         $this->injectArg('price',$_POST['price']);
     }
 
