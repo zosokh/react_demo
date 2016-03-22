@@ -83,7 +83,7 @@ var CommentList = React.createClass({
             <div className="item_imgbox">
               <img className="img-rounded img-responsive" src={comment.img} />
             </div>
-            <Comment author={comment.name}>
+            <Comment title={comment.name}>
                 {comment.comment}
             </Comment>
           </div>
@@ -133,7 +133,7 @@ var Comment = React.createClass({
   render: function() {
     return (
       <div className="caption">
-        <h4>{this.props.author}</h4>
+        <h4>{this.props.title}</h4>
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
     );
