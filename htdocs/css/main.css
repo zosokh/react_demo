@@ -135,14 +135,6 @@ background:none!important;
 }
 
 
-.item_imgbox{
-	text-align: center ;
-	margin:0 auto 0 auto ;
-	/*width: 90%;*/
-}
-
-
-
 /****************************************
 		3.  Header, Menu
 *****************************************/
@@ -161,5 +153,26 @@ background:none!important;
 }
 
 .itemBox{
-	height: 350px;
+	/*height: 350px;*/
+	display: inline-block;
+}
+
+.item_imgbox{
+	text-align: center ;
+	margin:0 auto 0 auto ;
+	position:relative;
+	height: 200px;
+}
+.item_imgbox > img{
+	position:absolute;
+	clip: rect(0px 500px 200px 0px);
+}
+
+.itemBox > .thumbnail > .caption{
+	height: 140px;
+}
+.textOverflow {
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; /* Safari */
+  -o-text-overflow: ellipsis; /* Opera */
 }

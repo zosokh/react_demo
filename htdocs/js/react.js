@@ -67,7 +67,7 @@ var CommentList = React.createClass({
   render: function() {
     var commentNodes = this.props.data.map(function (comment) {
       return (
-        <div className="col-md-3 col-sm-6">
+        <div className="col-md-3 col-sm-6 itemBox">
           <div className="thumbnail ">
             <div className="item_imgbox">
               <img className="img-rounded img-responsive" src={comment.img} />
@@ -137,7 +137,7 @@ var Comment = React.createClass({
 
   render: function() {
     return (
-      <div className="caption">
+      <div className="caption textOverflow">
         <h4>{this.props.title}</h4>
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
