@@ -5,6 +5,7 @@ require_once 'App.php';
 class Page_Ajax_Basic_Api_Create extends App_Page
 {
     private $result;
+    private $itemList;
     
     public function onInject()
     {
@@ -28,12 +29,16 @@ class Page_Ajax_Basic_Api_Create extends App_Page
             'uri' => 'Item',
             'values' => $submit
         ];
-        $this->result = $this->_resource->create($params)->request();
+        $result = $this->_resource->create($params)->request();
+        $this->itemList = $submit;
     }
 
     public function onOutput()
     {
-        $this->_ajax->addAjax('json',['result' => $this->result]);
+        $this->_ajax->addAjax('json', [
+          'result' => $this->result,
+          'item' => $this->itemList
+        ]);
         $this->output('ajax');
     }
 }
