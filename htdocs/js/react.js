@@ -23,6 +23,27 @@ var ItemBoxList = React.createClass({
       }.bind(this),
     });
   },
+  handleCommentSubmit: function(comment) {
+    var comments = this.state.data;
+    var newComments = comments.concat([comment]);
+    this.setState({data: newComments});
+    $.ajax({
+      url: '/api/create.php',
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+        newComments = comments.concat([data['json'][0]['item']]);
+        if (this.isMounted()) {
+          this.setState({data: newComments});
+        }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        this.setState({data: comments});
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
   getInitialState: function() {
     return {data: []};
   },
@@ -34,8 +55,8 @@ var ItemBoxList = React.createClass({
     // console.log(this.state.data);
     return (
       <div>
-        <div className="hero-head">
-            <h3 className="title">ITEM LIST</h3>
+        <div className="row mt20 txtct">
+          <CommentForm onCommentSubmit={this.handleCommentSubmit} />
         </div>
         <div className="row mt20">
           <CommentList data={this.state.data} />
@@ -130,36 +151,14 @@ var Comment = React.createClass({
 });
 
 
-var ComentFormBox = React.createClass({
-  handleCommentSubmit: function(comment) {
-    // var comments = this.state.data;
-    // var newComments = comments.concat([comment]);
-    // this.setState({data: newComments});
-    $.ajax({
-      url: '/api/create.php',
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: function(data) {
-        // newComments = comments.concat([data['json'][0]['item']]);
-        // if (this.isMounted()) {
-        //   this.setState({data: newComments});
-        // }
-      }.bind(this),
-      error: function(xhr, status, err) {
-        // this.setState({data: comments});
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
-  render: function() {
-    return (
-      <div className="row mt20 txtct">
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-      </div>
-    );
-  }
-});
+// var ComentFormBox = React.createClass({
+//   
+//   render: function() {
+//     return (
+//       
+//     );
+//   }
+// });
 
 
 var App = React.createClass({
@@ -203,7 +202,6 @@ var App = React.createClass({
             <ul className="nav navbar-nav" >
               <li><a href="#debugModal" data-toggle="modal">debug</a></li>
               <li className={this.state.page === 'itemlist' ? 'active' : ''}><a href="#/itemlist">itemlist</a></li>
-              <li className={this.state.page === 'comment' ? 'active':''}><a href="#/comment">comment</a></li>
             </ul>
           </div>
         </nav>
