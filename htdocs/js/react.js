@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Router = require('director').Router;
+
 var ItemBoxList = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
@@ -9,7 +13,9 @@ var ItemBoxList = React.createClass({
   		},
       cache: false,
       success: function(data) {
-        this.setState({data: data['json'][0]});
+        if (this.isMounted()) {
+          this.setState({data: data['json'][0]});
+        }
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props, status, err.toString());
@@ -18,7 +24,6 @@ var ItemBoxList = React.createClass({
     });
   },
   handleCommentSubmit: function(comment) {
-    console.log(comment);
     var comments = this.state.data;
     var newComments = comments.concat([comment]);
     this.setState({data: newComments});
@@ -29,7 +34,9 @@ var ItemBoxList = React.createClass({
       data: comment,
       success: function(data) {
         newComments = comments.concat([data['json'][0]['item']]);
-        this.setState({data: newComments});
+        if (this.isMounted()) {
+          this.setState({data: newComments});
+        }
       }.bind(this),
       error: function(xhr, status, err) {
         this.setState({data: comments});
@@ -48,33 +55,13 @@ var ItemBoxList = React.createClass({
     // console.log(this.state.data);
     return (
       <div>
-        <nav className="navbar navbar-default navbar-static-top">
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#jnavi">
-              <span className="sr-only">MENU</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-          </div>
-          <div id="jnavi" className="collapse navbar-collapse">
-            <ul className="nav navbar-nav" >
-              <li><a href="#">Home</a></li>
-              <li><a href="#debugModal" data-toggle="modal">debug</a></li>
-            </ul>
-          </div>
-        </nav>
-        <div id="wrapaper" className="row">
-          <div className="row mt20 txtct">
-            <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-          </div>
-          <div className="hero-head">
-              <h3 className="title">ITEM LIST</h3>
-          </div>
-          <div className="row mt20">
-            <CommentList data={this.state.data} />
-          </div>
+        <div className="hero-head">
+            <h3 className="title">ITEM LIST</h3>
         </div>
+        <div className="row mt20">
+          <CommentList data={this.state.data} />
+        </div>
+        <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} />
       </div>
     );
   }
@@ -163,7 +150,73 @@ var Comment = React.createClass({
   }
 });
 
+
+// var comentBoxList = React.createClass({
+//   render: function() {
+//     return (
+//       <div className="row mt20 txtct">
+//         <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} />
+//       </div>
+//     );
+//   }
+// });
+
+
+var App = React.createClass({
+  getInitialState: function() {
+    return {
+      todos: [],
+      page: 'itemlist'
+    };
+  },
+  componentDidMount: function() {
+
+    var setItemListPage = function() {
+      this.setState({ page: 'itemlist'});
+    }.bind(this);
+    var setCommentPage = function() {
+      this.setState({ page: 'comment' });
+    }.bind(this);
+    var router = Router({
+      '/itemlist': setItemListPage,
+      '/comment': setCommentPage,
+      '*': setItemListPage,
+    });
+    router.init();
+  },
+  render: function() {
+    var page = this.state.page === 'itemlist' ?
+      <ItemBoxList url="/js/comments.json" pollInterval={2000} /> :
+      <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} /> ;
+      
+    return (
+      <div className="app">        
+        <nav className="navbar navbar-default navbar-static-top">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#jnavi">
+              <span className="sr-only">MENU</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+          </div>
+          <div id="jnavi" className="collapse navbar-collapse">
+            <ul className="nav navbar-nav" >
+              <li><a href="#debugModal" data-toggle="modal">debug</a></li>
+              <li className={this.state.page === 'itemlist' ? 'active' : ''}><a href="#/itemlist">itemlist<span className="sr-only">(current)</span></a></li>
+              <li className={this.state.page === 'comment' ? 'active':''}><a href="#/comment">comment<span className="sr-only">(current)</span></a></li>
+            </ul>
+          </div>
+        </nav>
+        <div id="wrapaper" className="row">
+          {page}
+        </div>
+      </div>
+    );
+  }
+});
+
 ReactDOM.render(
-  <ItemBoxList url="/js/comments.json" pollInterval={2000} />,
+  <App></App>,
   document.getElementById('item_content')
 );
