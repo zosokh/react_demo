@@ -24,27 +24,6 @@ var ItemBoxList = React.createClass({displayName: "ItemBoxList",
       }.bind(this),
     });
   },
-  handleCommentSubmit: function(comment) {
-    var comments = this.state.data;
-    var newComments = comments.concat([comment]);
-    this.setState({data: newComments});
-    $.ajax({
-      url: '/api/create.php',
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: function(data) {
-        newComments = comments.concat([data['json'][0]['item']]);
-        if (this.isMounted()) {
-          this.setState({data: newComments});
-        }
-      }.bind(this),
-      error: function(xhr, status, err) {
-        this.setState({data: comments});
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
   getInitialState: function() {
     return {data: []};
   },
@@ -61,8 +40,7 @@ var ItemBoxList = React.createClass({displayName: "ItemBoxList",
         ), 
         React.createElement("div", {className: "row mt20"}, 
           React.createElement(CommentList, {data: this.state.data})
-        ), 
-        React.createElement(CommentForm, {className: "row mt20 txtct", onCommentSubmit: this.handleCommentSubmit})
+        )
       )
     );
   }
@@ -131,6 +109,7 @@ var CommentForm = React.createClass({displayName: "CommentForm",
               React.createElement("input", {className: "btn btn-danger btn-lg", value: "登録する", type: "submit"})
           )
       )
+      
     );
   }
 });
@@ -152,15 +131,36 @@ var Comment = React.createClass({displayName: "Comment",
 });
 
 
-// var comentBoxList = React.createClass({
-//   render: function() {
-//     return (
-//       <div className="row mt20 txtct">
-//         <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} />
-//       </div>
-//     );
-//   }
-// });
+var ComentFormBox = React.createClass({displayName: "ComentFormBox",
+  handleCommentSubmit: function(comment) {
+    // var comments = this.state.data;
+    // var newComments = comments.concat([comment]);
+    // this.setState({data: newComments});
+    $.ajax({
+      url: '/api/create.php',
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+        // newComments = comments.concat([data['json'][0]['item']]);
+        // if (this.isMounted()) {
+        //   this.setState({data: newComments});
+        // }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // this.setState({data: comments});
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  render: function() {
+    return (
+      React.createElement("div", {className: "row mt20 txtct"}, 
+        React.createElement(CommentForm, {onCommentSubmit: this.handleCommentSubmit})
+      )
+    );
+  }
+});
 
 
 var App = React.createClass({displayName: "App",
@@ -188,8 +188,7 @@ var App = React.createClass({displayName: "App",
   render: function() {
     var page = this.state.page === 'itemlist' ?
       React.createElement(ItemBoxList, {url: "/js/comments.json", pollInterval: 2000}) :
-      React.createElement(CommentForm, {className: "row mt20 txtct", onCommentSubmit: this.handleCommentSubmit}) ;
-      
+      React.createElement(ComentFormBox, null) ;
     return (
       React.createElement("div", {className: "app"}, 
         React.createElement("nav", {className: "navbar navbar-default navbar-static-top"}, 
@@ -204,8 +203,8 @@ var App = React.createClass({displayName: "App",
           React.createElement("div", {id: "jnavi", className: "collapse navbar-collapse"}, 
             React.createElement("ul", {className: "nav navbar-nav"}, 
               React.createElement("li", null, React.createElement("a", {href: "#debugModal", "data-toggle": "modal"}, "debug")), 
-              React.createElement("li", {className: this.state.page === 'itemlist' ? 'active' : ''}, React.createElement("a", {href: "#/itemlist"}, "itemlist", React.createElement("span", {className: "sr-only"}, "(current)"))), 
-              React.createElement("li", {className: this.state.page === 'comment' ? 'active':''}, React.createElement("a", {href: "#/comment"}, "comment", React.createElement("span", {className: "sr-only"}, "(current)")))
+              React.createElement("li", {className: this.state.page === 'itemlist' ? 'active' : ''}, React.createElement("a", {href: "#/itemlist"}, "itemlist")), 
+              React.createElement("li", {className: this.state.page === 'comment' ? 'active':''}, React.createElement("a", {href: "#/comment"}, "comment"))
             )
           )
         ), 

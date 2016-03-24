@@ -23,27 +23,6 @@ var ItemBoxList = React.createClass({
       }.bind(this),
     });
   },
-  handleCommentSubmit: function(comment) {
-    var comments = this.state.data;
-    var newComments = comments.concat([comment]);
-    this.setState({data: newComments});
-    $.ajax({
-      url: '/api/create.php',
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: function(data) {
-        newComments = comments.concat([data['json'][0]['item']]);
-        if (this.isMounted()) {
-          this.setState({data: newComments});
-        }
-      }.bind(this),
-      error: function(xhr, status, err) {
-        this.setState({data: comments});
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
   getInitialState: function() {
     return {data: []};
   },
@@ -61,7 +40,6 @@ var ItemBoxList = React.createClass({
         <div className="row mt20">
           <CommentList data={this.state.data} />
         </div>
-        <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} />
       </div>
     );
   }
@@ -130,6 +108,7 @@ var CommentForm = React.createClass({
               <input className="btn btn-danger btn-lg" value="登録する" type="submit" />
           </div>
       </form>
+      
     );
   }
 });
@@ -151,15 +130,36 @@ var Comment = React.createClass({
 });
 
 
-// var comentBoxList = React.createClass({
-//   render: function() {
-//     return (
-//       <div className="row mt20 txtct">
-//         <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} />
-//       </div>
-//     );
-//   }
-// });
+var ComentFormBox = React.createClass({
+  handleCommentSubmit: function(comment) {
+    // var comments = this.state.data;
+    // var newComments = comments.concat([comment]);
+    // this.setState({data: newComments});
+    $.ajax({
+      url: '/api/create.php',
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+        // newComments = comments.concat([data['json'][0]['item']]);
+        // if (this.isMounted()) {
+        //   this.setState({data: newComments});
+        // }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // this.setState({data: comments});
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  render: function() {
+    return (
+      <div className="row mt20 txtct">
+        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+      </div>
+    );
+  }
+});
 
 
 var App = React.createClass({
@@ -187,8 +187,7 @@ var App = React.createClass({
   render: function() {
     var page = this.state.page === 'itemlist' ?
       <ItemBoxList url="/js/comments.json" pollInterval={2000} /> :
-      <CommentForm className="row mt20 txtct" onCommentSubmit={this.handleCommentSubmit} /> ;
-      
+      <ComentFormBox /> ;
     return (
       <div className="app">        
         <nav className="navbar navbar-default navbar-static-top">
@@ -203,8 +202,8 @@ var App = React.createClass({
           <div id="jnavi" className="collapse navbar-collapse">
             <ul className="nav navbar-nav" >
               <li><a href="#debugModal" data-toggle="modal">debug</a></li>
-              <li className={this.state.page === 'itemlist' ? 'active' : ''}><a href="#/itemlist">itemlist<span className="sr-only">(current)</span></a></li>
-              <li className={this.state.page === 'comment' ? 'active':''}><a href="#/comment">comment<span className="sr-only">(current)</span></a></li>
+              <li className={this.state.page === 'itemlist' ? 'active' : ''}><a href="#/itemlist">itemlist</a></li>
+              <li className={this.state.page === 'comment' ? 'active':''}><a href="#/comment">comment</a></li>
             </ul>
           </div>
         </nav>
