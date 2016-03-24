@@ -1,6 +1,17 @@
-<div class="navbar navbar-default navbar-static-top" role="navigation" style="background-color:#444;">
-    <ul class="nav navbar-nav">
-        <li class="active nav"><a href="#">Home</a></li>
-        <li class="nav" ><a href="#debugModal" data-toggle="modal">debug</a></li>
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#jnavi">
+      <span class="sr-only">MENU</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+  <div id="jnavi" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav" >
+      <li><a href="#debugModal" data-toggle="modal">debug</a></li>
+      <li><a href="/">itemlist</a></li>
+      <li><a href="/create">comment</a></li>
     </ul>
-</div>
+  </div>
+</nav>
