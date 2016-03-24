@@ -1,4 +1,4 @@
-var CommentBox = React.createClass({
+var ItemBoxList = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: '/api/select.php',
@@ -47,15 +47,33 @@ var CommentBox = React.createClass({
   render: function() {
     // console.log(this.state.data);
     return (
-      <div className="row">
-        <div className="row mt20 txtct">
-          <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-        </div>
-        <div className="itemlist_h1">
-            <h1>ITEM LIST</h1>
-        </div>
-        <div className="row mt20">
-          <CommentList data={this.state.data} />
+      <div>
+        <nav className="navbar navbar-default navbar-static-top">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#jnavi">
+              <span className="sr-only">MENU</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+          </div>
+          <div id="jnavi" className="collapse navbar-collapse">
+            <ul className="nav navbar-nav" >
+              <li><a href="#">Home</a></li>
+              <li><a href="#debugModal" data-toggle="modal">debug</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div id="wrapaper" className="row">
+          <div className="row mt20 txtct">
+            <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+          </div>
+          <div className="hero-head">
+              <h3 className="title">ITEM LIST</h3>
+          </div>
+          <div className="row mt20">
+            <CommentList data={this.state.data} />
+          </div>
         </div>
       </div>
     );
@@ -146,6 +164,6 @@ var Comment = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url="/js/comments.json" pollInterval={2000} />,
+  <ItemBoxList url="/js/comments.json" pollInterval={2000} />,
   document.getElementById('item_content')
 );
