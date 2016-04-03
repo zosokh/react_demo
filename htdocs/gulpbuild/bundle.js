@@ -6,7 +6,7 @@ var Router = require('director').Router;
 var ItemBoxList = React.createClass({displayName: "ItemBoxList",
   loadCommentsFromServer: function() {
     $.ajax({
-      url: '/api/select.php',
+      url: '/react_demo/api/select.php',
       dataType: 'json',
       type: 'POST',
       data	:{
@@ -137,7 +137,7 @@ var ComentFormBox = React.createClass({displayName: "ComentFormBox",
     // var newComments = comments.concat([comment]);
     // this.setState({data: newComments});
     $.ajax({
-      url: '/api/create.php',
+      url: '/react_demo/api/create.php',
       dataType: 'json',
       type: 'POST',
       data: comment,
@@ -187,7 +187,7 @@ var App = React.createClass({displayName: "App",
   },
   render: function() {
     var page = this.state.page === 'itemlist' ?
-      React.createElement(ItemBoxList, {url: "/js/comments.json", pollInterval: 2000}) :
+      React.createElement(ItemBoxList, {url: "/react_demo/js/comments.json", pollInterval: 2000}) :
       React.createElement(ComentFormBox, null) ;
     return (
       React.createElement("div", {className: "app"}, 
