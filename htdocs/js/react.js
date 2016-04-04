@@ -5,7 +5,7 @@ var Router = require('director').Router;
 var ItemBoxList = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
-      url: '/api/select.php',
+      url: '/react_demo_other/api/select.php',
       dataType: 'json',
       type: 'POST',
       data	:{
@@ -28,7 +28,7 @@ var ItemBoxList = React.createClass({
     var newComments = comments.concat([comment]);
     this.setState({data: newComments});
     $.ajax({
-      url: '/api/create.php',
+      url: '/react_demo_other/api/create.php',
       dataType: 'json',
       type: 'POST',
       data: comment,
@@ -185,7 +185,7 @@ var App = React.createClass({
   },
   render: function() {
     var page = this.state.page === 'itemlist' ?
-      <ItemBoxList url="/js/comments.json" pollInterval={2000} /> :
+      <ItemBoxList url="/react_demo_other/js/comments.json" pollInterval={2000} /> :
       <ComentFormBox /> ;
     return (
       <div className="app">        
