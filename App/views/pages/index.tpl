@@ -20,7 +20,7 @@
                     </div>
                   </div>
             </div>
-            {if ((($k+1)%4 == 0) || (count($ITEMS) == $k+1))}
+            {if ((($k+1)%4 == 0) || (count($itemList) == $k+1))}
               </div>
             {/if}
             {/foreach}

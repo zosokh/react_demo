@@ -27,7 +27,7 @@ class Page_Create_Index extends App_Page
             'values' => $submit
         );
         $this->_resource->create($params)->request();
-        $this->_header->redirect('/index.php');
+        $this->_header->redirect('/react_demo_other/index.php');
     }
 }
 

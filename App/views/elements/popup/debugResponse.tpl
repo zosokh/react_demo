@@ -28,5 +28,5 @@
 </div>
 
 <!-- ▼ JS ▼ -->
-<script src="/js/debugResponce.js"></script>
+<script src="/react_demo_other/js/debugResponce.js"></script>
 <!-- ▲ JS ▲ -->
